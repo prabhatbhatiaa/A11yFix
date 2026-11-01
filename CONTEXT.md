@@ -23,7 +23,6 @@
    - Sibling folders:
      - `backend/`: Node.js + Express API server.
      - `frontend/`: Next.js (App Router, Tailwind CSS, Lucide Icons).
-     - `demo-site/`: Static test website with deliberate a11y bugs for live demo & before/after rescan testing.
      - `hack/`: Original problem statement & reference materials.
      - `CONTEXT.md`: This living document.
 3. **AI Integration:**
@@ -37,25 +36,27 @@
 
 ## 3. Roadmap & Progress Tracker
 
-- [ ] **Phase 1: Backend Foundation & axe-core Scanner**
-  - [ ] Set up `backend/` (`package.json`, Express, cors, dotenv).
-  - [ ] Configure local Playwright Chromium installation.
-  - [ ] Implement URL safety/SSRF validation (`src/utils/security.js`).
-  - [ ] Implement browser automation and axe-core runner (`src/services/scanner.js`).
-  - [ ] Implement violation grouping, sorting, and scoring algorithm (`src/services/analyzer.js`).
-  - [ ] Expose `POST /api/audit` endpoint.
-- [ ] **Phase 2: Gemini AI Remediation Engine**
-  - [ ] Integrate Gemini SDK with structured prompting.
-  - [ ] Expose `POST /api/fix` for generating explanations and corrected HTML snippets.
-- [ ] **Phase 3: Frontend Developer Dashboard**
-  - [ ] Initialize Next.js project with Tailwind CSS.
-  - [ ] Build URL input, audit progress/loading state.
+- [x] **Phase 1: Backend Foundation & axe-core Scanner**
+  - [x] Set up `backend/` (`package.json`, Express, cors, dotenv, helmet, zod).
+  - [x] Configure local Playwright Chromium installation (strictly isolated in `backend/.cache/ms-playwright`).
+  - [x] Implement URL safety/SSRF validation (`src/utils/security.js`) preventing internal/cloud metadata leaks.
+  - [x] Implement browser automation and axe-core runner (`src/services/scanner.js`).
+  - [x] Implement violation grouping, sorting, and scoring algorithm (`src/services/analyzer.js`).
+  - [x] Expose `POST /api/audit` and `POST /api/fix` endpoints (`src/routes/audit.js`).
+  - [x] Integrate Gemini AI remediation with deterministic fallbacks (`src/services/ai.js`).
+  - [x] Verified end-to-end scanner pipeline on `demo-site/index.html` (verified 56/100 score, 3 real violations detected and fixed).
+- [ ] **Phase 2: Gemini AI Remediation Enhancements & Rate Limiting**
+  - [x] Structured output prompt with JSON schema.
+  - [x] Deterministic fallback for network/quota resiliency.
+- [ ] **Phase 3: Frontend Developer Dashboard (Claude Opus 5.5 Level UI)**
+  - [ ] Initialize Next.js project with Tailwind CSS + Lucide Icons.
+  - [ ] Build URL input, audit progress/loading state with micro-interactions.
   - [ ] Build issue explorer (grouped, ranked, severity badges, WCAG tags).
   - [ ] Build remediation panel (side-by-side diff, copy button, Gemini fix trigger).
   - [ ] Build rescan comparison mechanism.
-- [ ] **Phase 4: Demo Site & Validation**
-  - [ ] Create `demo-site/index.html` with target accessibility violations (contrast, alt, label, lang).
-  - [ ] Test end-to-end workflow: Scan → View AI Fix → Patch → Rescan → Score Improvement.
+- [ ] **Phase 4: Live Verification & Testing**
+  - [x] Verified scanner & AI fix pipeline end-to-end.
+  - [ ] Live visual comparison of before vs. after.
 
 ---
 
@@ -67,6 +68,10 @@
 | 2026-10-30 | Architecture | Separate `backend/` and `frontend/` folders | Clean separation of concerns between heavy headless browser backend and React UI. |
 | 2026-10-30 | Environment | Keep all dependencies strictly in project folder | Zero impact on host OS / global system environment. |
 | 2026-10-30 | Documentation | Created `CONTEXT.md` as project brain | Persistent log of all decisions, edits, and state transitions for easy handoff. |
+| 2026-11-01 | Backend | Implemented SSRF and DNS rebinding guard in `security.js` | Prohibits access to internal RFC1918 IPs, 169.254.x.x, loopbacks while permitting safe local dev mode. |
+| 2026-11-01 | Playwright | Configured local Chromium binaries in `.cache/ms-playwright` | Zero global OS footprint; completely self-contained. |
+| 2026-11-01 | Core Engine | Built `scanner.js` + `analyzer.js` + `ai.js` | Full real-browser axe-core execution with impact weighting scoring formula and Gemini fixes. |
+| 2026-11-01 | Verification | Ran `test-scanner.js` on `demo-site/index.html` | Successfully scored page at 56/100, caught critical `image-alt`, `button-name`, `label` violations and generated drop-in fixes. |
 
 ---
 

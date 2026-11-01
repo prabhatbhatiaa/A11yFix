@@ -1,2 +1,4 @@
 .env
 hack/
+.cache/
+node_modules/
