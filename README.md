@@ -27,6 +27,8 @@ Most automated accessibility tools stop at generating overwhelming, jargon-heavy
    - Precision prompts transform failing HTML nodes into accessible, drop-in code snippets with plain-English rationales and WCAG criteria references.
 5. **Continuous Verification (Rescan & Compare)**:
    - Live before-and-after audit comparison demonstrating tangible score improvements once fixes are applied.
+6. **Ultra-Modern 60 FPS Developer UI**:
+   - Sleek dark aesthetic with backdrop blur glassmorphism, Framer Motion transitions, responsive drawer mechanics, dynamic circular score gauges, and one-click copy integrations.
 
 ---
 
@@ -92,19 +94,21 @@ ALLOW_LOCALHOST_SCAN=true
 SCAN_TIMEOUT_MS=30000
 ```
 
-Start the backend:
-```bash
-npm run dev
-```
-Backend runs at `http://localhost:5000`.
-
-### 3. Frontend Setup (Next.js)
+### 3. Frontend Setup
 ```bash
 cd ../frontend
 npm install
+```
+
+### 4. Single-Command Launch (Root Monorepo)
+You can start both the backend API server and the Next.js frontend concurrently with a single command from the project root:
+
+```bash
 npm run dev
 ```
-Frontend runs at `http://localhost:3000`.
+
+- **Frontend:** `http://localhost:3000`
+- **Backend API:** `http://localhost:5000`
 
 ---
 

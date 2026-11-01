@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+:root {
+  --bg-page: #06080d;
+  --bg-surface: #0a0d14;
+  --bg-card: #0d111b;
+  --border-dim: rgba(255, 255, 255, 0.08);
+  --border-bright: rgba(255, 255, 255, 0.18);
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --code-bg: #040609;
+  --accent-cyan: #06b6d4;
+  --grid-line: rgba(255, 255, 255, 0.03);
+  --header-bg: rgba(9, 12, 18, 0.9);
+  --input-bg: #0c0f17;
+  --badge-bg: #18181b;
+  --badge-text: #e4e4e7;
+  --drawer-bg: #0a0d14;
+}
+
+html.light {
+  --bg-page: #f1f5f9;
+  --bg-surface: #ffffff;
+  --bg-card: #ffffff;
+  --border-dim: rgba(15, 23, 42, 0.1);
+  --border-bright: rgba(15, 23, 42, 0.22);
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --code-bg: #0f172a;
+  --accent-cyan: #0891b2;
+  --grid-line: rgba(15, 23, 42, 0.06);
+  --header-bg: rgba(255, 255, 255, 0.9);
+  --input-bg: #ffffff;
+  --badge-bg: #e2e8f0;
+  --badge-text: #1e293b;
+  --drawer-bg: #ffffff;
+}
+
+body {
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif;
+  overflow-x: hidden;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.bg-grid-cadence {
+  background-size: 36px 36px;
+  background-image: 
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+}
+
+.instrument-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-dim);
+  box-shadow: 0 2px 10px -1px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+}
+
+.instrument-card:hover {
+  border-color: var(--border-bright);
+}
+
+.instrument-panel {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-dim);
+}
+
+.code-viewport {
+  background: var(--code-bg);
+  border: 1px solid var(--border-dim);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* 3D tilt card styles */
+.card-3d-wrapper {
+  perspective: 1000px;
+}
+
+.card-3d-surface {
+  transform-style: preserve-3d;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-page);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-bright);
+  border-radius: 2px;
+}

@@ -1,0 +1,15 @@
+{
+  "name": "a11yfix-monorepo",
+  "version": "1.0.0",
+  "description": "A11yFix — AI-Powered Web Accessibility Auditor and Auto-Fixer",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -n \"BACKEND,FRONTEND\" -c \"magenta,cyan\" \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\"",
+    "build": "npm run build --prefix frontend",
+    "install:all": "npm install && npm install --prefix backend && npm install --prefix frontend",
+    "install:browsers": "npm run install:browsers --prefix backend"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
