@@ -28,7 +28,11 @@ Most automated accessibility tools stop at generating overwhelming, jargon-heavy
 5. **Continuous Verification (Rescan & Compare)**:
    - Live before-and-after audit comparison demonstrating tangible score improvements once fixes are applied.
 6. **Ultra-Modern 60 FPS Developer UI**:
-   - Sleek dark aesthetic with backdrop blur glassmorphism, Framer Motion transitions, responsive drawer mechanics, dynamic circular score gauges, and one-click copy integrations.
+   - Sleek dark obsidian and technical light themes, interactive Three.js 3D DOM topology mesh, 3D perspective card tilts, and zero synthetic mocks.
+7. **Instant PDF & JSON Report Export**:
+   - One-click client-side export generating branded PDF audit certificates and raw JSON telemetry reports.
+8. **Gemini Vision Multimodal Alt-Text Engine**:
+   - Analyzes images missing descriptive text and synthesizes concise, WCAG 1.1.1 compliant descriptions.
 
 ---
 

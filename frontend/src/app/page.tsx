@@ -20,8 +20,11 @@ import {
   Boxes,
   HelpCircle,
   ExternalLink,
+  Download,
+  FileDown,
 } from 'lucide-react';
 import { runAudit } from '@/lib/api';
+import { exportAuditPDF, exportAuditJSON } from '@/lib/export';
 import { AuditResultData, AuditViolation, AuditElementNode, SeverityLevel } from '@/types/audit';
 import { ScoreGauge } from '@/components/ScoreGauge';
 import { IssueCard } from '@/components/IssueCard';
@@ -102,14 +105,32 @@ export default function Home() {
             </div>
 
             {auditData && (
-              <button
-                onClick={() => handleScan(auditData.url)}
-                disabled={loading}
-                className="px-3 py-1.5 rounded bg-[var(--bg-card)] hover:bg-[var(--border-dim)] text-[var(--text-primary)] border border-[var(--border-dim)] text-xs font-semibold flex items-center gap-1.5 transition-colors disabled:opacity-50"
-              >
-                <RotateCcw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
-                <span>RESCAN</span>
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => exportAuditPDF(auditData)}
+                  className="px-2.5 py-1.5 rounded bg-[var(--bg-card)] hover:bg-[var(--border-dim)] text-[var(--text-primary)] border border-[var(--border-dim)] text-xs font-semibold flex items-center gap-1.5 transition-colors"
+                  title="Download PDF Compliance Report"
+                >
+                  <FileDown className="w-3.5 h-3.5 text-cyan-500" />
+                  <span className="hidden sm:inline">PDF</span>
+                </button>
+                <button
+                  onClick={() => exportAuditJSON(auditData)}
+                  className="px-2.5 py-1.5 rounded bg-[var(--bg-card)] hover:bg-[var(--border-dim)] text-[var(--text-primary)] border border-[var(--border-dim)] text-xs font-semibold flex items-center gap-1.5 transition-colors"
+                  title="Export Raw JSON Audit Data"
+                >
+                  <Download className="w-3.5 h-3.5 text-emerald-500" />
+                  <span className="hidden sm:inline">JSON</span>
+                </button>
+                <button
+                  onClick={() => handleScan(auditData.url)}
+                  disabled={loading}
+                  className="px-3 py-1.5 rounded bg-[var(--bg-card)] hover:bg-[var(--border-dim)] text-[var(--text-primary)] border border-[var(--border-dim)] text-xs font-semibold flex items-center gap-1.5 transition-colors disabled:opacity-50"
+                >
+                  <RotateCcw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
+                  <span>RESCAN</span>
+                </button>
+              </div>
             )}
 
             {/* Light / Dark Mode Toggle */}

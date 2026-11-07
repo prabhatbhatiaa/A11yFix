@@ -4,6 +4,7 @@ import { validateScanUrl } from '../utils/security.js';
 import { runAxeScan } from '../services/scanner.js';
 import { analyzeAuditResults } from '../services/analyzer.js';
 import { generateA11yFix } from '../services/ai.js';
+import { generateAltTextVision } from '../services/vision.js';
 
 const router = express.Router();
 
@@ -19,6 +20,11 @@ const FixRequestSchema = z.object({
   html: z.string().min(1, 'HTML element is required'),
   failureSummary: z.string().optional().default(''),
   selector: z.string().optional().default(''),
+});
+
+const AltTextRequestSchema = z.object({
+  imageUrl: z.string().min(1, 'Image URL or data is required'),
+  surroundingContext: z.string().optional().default(''),
 });
 
 /**
@@ -101,6 +107,35 @@ router.post('/fix', async (req, res) => {
     return res.status(500).json({
       success: false,
       error: error.message || 'Failed to generate accessibility remediation.',
+    });
+  }
+});
+
+/**
+ * POST /api/alt-text
+ * Generates context-aware alt text using Gemini Vision
+ */
+router.post('/alt-text', async (req, res) => {
+  try {
+    const parseResult = AltTextRequestSchema.safeParse(req.body);
+    if (!parseResult.success) {
+      return res.status(400).json({
+        success: false,
+        error: parseResult.error.errors[0]?.message || 'Invalid alt-text request',
+      });
+    }
+
+    const altResult = await generateAltTextVision(parseResult.data);
+
+    return res.json({
+      success: true,
+      data: altResult,
+    });
+  } catch (error) {
+    console.error('Alt text generation error:', error);
+    return res.status(500).json({
+      success: false,
+      error: error.message || 'Failed to generate image alt text.',
     });
   }
 });
